@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: grpc-trx-server 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: grpc-trx-server 
+  template:
+    metadata:
+      labels:
+        app: grpc-trx-server 
+    spec:
+      containers:
+      - name: grpc-trx-server 
+        image: wallet/grpc-trx-server 
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 50051
+          name: grpc
+
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: trxsvc
+spec:
+  selector:
+    app: grpc-trx-server 
+  ports:
+  - port: 50051 
+    targetPort: 50051
+    name: grpc
+  type: NodePort

@@ -1,0 +1,49 @@
+# "debug||develop ,release||product
+
+app:
+  "name": trxservice
+  run_mode: "debug"
+  grpc_port: "50051"
+  http_port: "8080"
+  node_addr: ["161.117.224.116:50051","47.241.20.47:50051"]
+
+log:
+  level: "info"
+  filename: "./logs/app.log"
+  max_size: 50   # M
+  max_age: 10
+  max_backups: 10
+
+db:
+  driver: mysql
+  host: 127.0.0.1
+  port: 3306
+  user: root
+  password: changeme
+  db_name: trx
+  max_open_conns: 20
+  max_idle_conns: 10
+  conn_max_lifetime: 300  # seconds
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  db: 0
+
+
+tokenList:
+  usdt:
+    name: "USDT"
+    decimal: 6
+    contractAddr: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
+
+
+metrics:
+  url: 0.0.0.0:7070
+  service_name: trxservice
+
+trace:
+  enable: true
+  endpoint: http://127.0.0.1:14268/api/traces
+  service_name: trxservice_grpc
+  log_spans: true

@@ -1,0 +1,51 @@
+syntax = "proto3";
+package trxv1;
+
+import "google/api/annotations.proto";
+
+option go_package = "./;trxv1";
+
+service TrxService {
+   rpc GetTrxBalance(GetTrxBalanceRequest) returns (GetTrxBalanceReply){
+      // option type is http
+    option (google.api.http) = {
+        // this is url, for RESTfull/JSON api and method
+
+        // 定义一个 POST 接口，并且把 body 映射到 GetTrxBalanceRequest
+        post: "/api/v1/getbalance"
+        body: "*"
+        additional_bindings {
+            // 定义一个 GET 接口，并且把 address 映射到 GetTrxBalanceRequest
+            get: "/api/v1/getbalance/{address}"
+        }
+    };
+   };
+   rpc GetTRC20TokenBalance(GetTRC20TokenBalanceRequest) returns (GetTRC20TokenBalanceReply) {
+    option(google.api.http) = {
+        post:"/api/v1/gettrc20tokenbalance"
+        body: "*"
+        additional_bindings {
+            get: "/api/v1/gettrc20tokenbalance/addr/{address}/token/{token}"
+        }
+    };
+   };
+};
+
+message GetTrxBalanceRequest {
+    string address = 2;
+}
+
+message GetTrxBalanceReply {
+    string balance = 1;
+}
+
+
+message GetTRC20TokenBalanceRequest {
+    string token = 2;
+    string address = 3;
+}
+
+message GetTRC20TokenBalanceReply {
+    string token = 1;
+    string balance = 2;
+}
