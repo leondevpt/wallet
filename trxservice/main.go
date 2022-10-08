@@ -169,18 +169,3 @@ func runGrpcGatewayServer() *gwruntime.ServeMux {
 	}
 	return gwmux
 }
-
-func httpServer() error {
-	ctxr := context.Background()
-	ctx, cancel := context.WithCancel(ctxr)
-	defer cancel()
-	mux := gwruntime.NewServeMux()
-
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-	//與原生gRPC不同點在這邊，需要做http與grpc的對應
-	err := pb.RegisterTrxServiceHandlerFromEndpoint(ctx, mux, ":8787", opts)
-	if err != nil {
-		return err
-	}
-	return http.ListenAndServe(fmt.Sprintf(":%d", setting.Conf.GrpcPort), mux)
-}
