@@ -90,7 +90,6 @@ func NewZapLogger(opts ...Option) *zap.Logger {
 	logger := zap.New(core,
 		zap.AddCaller(),
 		zap.ErrorOutput(stderr),
-		zap.AddCallerSkip(1),
 	)
 
 	for key, value := range opt.fields {

@@ -2,9 +2,6 @@ package service
 
 import (
 	"context"
-	"github.com/leondevpt/wallet/trxservice/pkg/errcode"
-
-	"google.golang.org/grpc/metadata"
 )
 
 type Auth struct{}
@@ -18,6 +15,7 @@ func (a *Auth) GetAppSecret() string {
 }
 
 func (a *Auth) Check(ctx context.Context) error {
+	/*
 	md, _ := metadata.FromIncomingContext(ctx)
 
 	var appKey, appSecret string
@@ -30,6 +28,6 @@ func (a *Auth) Check(ctx context.Context) error {
 	if appKey != a.GetAppKey() || appSecret != a.GetAppSecret() {
 		return errcode.TogRPCError(errcode.Unauthorized)
 	}
-
+*/
 	return nil
 }
